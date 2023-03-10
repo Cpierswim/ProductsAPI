@@ -69,6 +69,11 @@ class ProductListResoucre(Resource):
             return product_schema.dump(add_product), 201
         except ValidationError as error:
             return error.messages, 400
+        
+class ProductResource(Resource):
+    def get(self, product_id):
+        return product_schema.dump(Product.query.get_or_404(product_id)), 200
 
 # Routes
 api.add_resource(ProductListResoucre, '/api/products')
+api.add_resource(ProductResource, '/api/products/<int:product_id>')
