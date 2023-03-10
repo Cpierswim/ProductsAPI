@@ -62,14 +62,13 @@ class ProductListResoucre(Resource):
         return products_schema.dump(all_produts), 200
 
     def post(self):
-        new_product = Product(name=request.json["name"], 
-                              discription=request.json["discription"],
-                              price=request.json["price"],
-                              inventory_quantity=request.json["inventory_quantity"],
-                              img_url=request.json["img_url"])
-        db.session.add(new_product)
-        db.session.commit()
-        return product_schema.dump(new_product), 201
+        try:
+            add_product = product_schema.load(request.get_json())
+            db.session.add(add_product)
+            db.session.commit()
+            return product_schema.dump(add_product), 201
+        except ValidationError as error:
+            return error.messages, 400
 
 # Routes
 api.add_resource(ProductListResoucre, '/api/products')
