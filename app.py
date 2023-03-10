@@ -59,8 +59,17 @@ products_schema = ProductSchema(many=True)
 class ProductListResoucre(Resource):
     def get():
         all_produts = Product.query.all()
-        return all_produts
+        return products_schema.dump(all_produts), 200
 
+    def post(self):
+        new_product = Product(name=request.json["name"], 
+                              discription=request.json["discription"],
+                              price=request.json["price"],
+                              inventory_quantity=request.json["inventory_quantity"],
+                              img_url=request.json["img_url"])
+        db.session.add(new_product)
+        db.session.commit()
+        return product_schema.dump(new_product), 201
 
 # Routes
 api.add_resource(ProductListResoucre, '/api/products')
