@@ -24,32 +24,32 @@ CORS(app)
 Migrate(app, db)
 
 # Models
-class Product(db.Model):
+class Products(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    discription = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
     price = db.Column(db.Float, nullable=False)
     inventory_quantity = db.Column(db.Integer, nullable=False)
     img_url = db.Column(db.String(255))
 
     def __repr__(self) -> str:
-        return f'ID: {self.id} Name: {self.name} {self.discription} {self.price} {self.inventory_quantity} {self.img_url}'
+        return f'ID: {self.id} Name: {self.name} {self.description} {self.price} {self.inventory_quantity} {self.img_url}'
 
 # Schemas
 class ProductSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     name = fields.String(required=True)
-    discription = fields.String(required=True)
+    description = fields.String(required=True)
     price = fields.Float(required=True)
     inventory_quantity = fields.Integer(required=True)
     img_url = fields.String()
 
     class Meta:
-        fields = ('id', 'name', 'discription', 'price', 'inventory_quantity', 'img_url')
+        fields = ('id', 'name', 'description', 'price', 'inventory_quantity', 'img_url')
 
     @post_load
     def create_product(self, data, **kwargs):
-        return Product(**data)
+        return Products(**data)
 
 product_schema = ProductSchema()
 products_schema = ProductSchema(many=True)
@@ -58,7 +58,7 @@ products_schema = ProductSchema(many=True)
 # Resources
 class ProductListResoucre(Resource):
     def get():
-        all_produts = Product.query.all()
+        all_produts = Products.query.all()
         return products_schema.dump(all_produts), 200
 
     def post(self):
@@ -72,14 +72,14 @@ class ProductListResoucre(Resource):
         
 class ProductResource(Resource):
     def get(self, product_id):
-        return product_schema.dump(Product.query.get_or_404(product_id)), 200
+        return product_schema.dump(Products.query.get_or_404(product_id)), 200
     
     def put(self, product_id):
-        product_from_db = Product.query.get_or_404(product_id)
+        product_from_db = Products.query.get_or_404(product_id)
         if 'name' in request.json:
             product_from_db.name = request.json['name']
-        if 'discription' in request.json:
-            product_from_db.discription = request.json['discription']
+        if 'description' in request.json:
+            product_from_db.description = request.json['description']
         if 'price' in request.json:
             product_from_db.price = request.json['price']
         if 'inventory_quantity' in request.json:
@@ -90,7 +90,7 @@ class ProductResource(Resource):
         return product_schema.dump(product_from_db), 200
     
     def delete(self, product_id):
-        product_from_db = Product.query.get_or_404(product_id)
+        product_from_db = Products.query.get_or_404(product_id)
         db.session.delete(product_from_db)
         db.session.commit()
         return '', 204
