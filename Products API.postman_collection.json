@@ -36,7 +36,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Fastskin LZR Pure Valor Printed Jammer\",\r\n    \"discription\": \"Top end Speedo male racing suit gear toward distance swimmers.\",\r\n    \"price\": 460.00,\r\n    \"inventory_quantity\": 97, \r\n    \"img_url\": \"https://static.thcdn.com/images/large/webp//productimg/1600/1600/13246395-1035005624626042.jpg\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Fastskin LZR Pure Valor Printed Jammer\",\r\n    \"description\": \"Top end Speedo male racing suit gear toward distance swimmers.\",\r\n    \"price\": 460.00,\r\n    \"inventory_quantity\": 97, \r\n    \"img_url\": \"https://static.thcdn.com/images/large/webp//productimg/1600/1600/13246395-1035005624626042.jpg\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
